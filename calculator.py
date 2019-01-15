@@ -12,7 +12,7 @@ try:
     c = float(sys.argv[3])
 except ValueError:
     error = True
-    print "Your input is invalid"
+    print "Your input is invalid!"
 
 if not error:
     avg = (float(a) + b + c) / 3
