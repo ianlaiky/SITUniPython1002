@@ -17,4 +17,4 @@ except ValueError:
 if not error:
     avg = (float(a) + b + c) / 3
 
-    print avg
+    print "%.2f" % avg
