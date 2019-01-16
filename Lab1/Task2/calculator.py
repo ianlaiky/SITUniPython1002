@@ -11,7 +11,8 @@ try:
     b = float(sys.argv[2])
     c = float(sys.argv[3])
 except:
-    print "Your input is invalid!"
+
+    error = True
 
 workingHour = float(a)
 normalHour = float(a)
@@ -31,4 +32,5 @@ if not error:
         print "Normal Salary:%.2f" % normalPay
         print "Extra Salary:%.2f" % overtimePay
         print "Total Salary:%.2f" % totalPay
+else:
     print "Your input is invalid!"
