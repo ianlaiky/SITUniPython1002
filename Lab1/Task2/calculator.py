@@ -14,6 +14,7 @@ except:
 
     error = True
 
+
 workingHour = float(a)
 normalHour = float(a)
 overtimeHour = 0
@@ -32,5 +33,7 @@ if not error:
         print "Normal Salary:%.2f" % normalPay
         print "Extra Salary:%.2f" % overtimePay
         print "Total Salary:%.2f" % totalPay
+    else:
+        print "Your input is invalid!"
 else:
     print "Your input is invalid!"
