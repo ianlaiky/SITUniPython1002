@@ -18,7 +18,7 @@ if (float(b) >0.0 and float(c)>0.0):
 
         bmi = "%.2f" % bmi
         cat = ""
-        if bmi < float(16):
+        if float(bmi) < float(16):
             cat = "Severe Thinness"
         elif float(bmi) >=float(17) and float(bmi) <=float(17):
             cat = "Moderate Thinness"
