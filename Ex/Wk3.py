@@ -11,11 +11,20 @@
 
 #ex 2
 
-list1 = [5,7,8,9]
+# list1 = [5,7,8,9]
+#
+# list2 = list(list1)
+#
+# list2[0] =10
+#
+# print list1
+# print list2
 
-list2 = list(list1)
 
-list2[0] =10
+#ex 3
 
-print list1
-print list2
+word = "for loop is so cool!"
+
+for i in word:
+    if i != " ":
+        print i
