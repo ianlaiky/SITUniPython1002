@@ -16,12 +16,11 @@ listLeap = []
 for xy in range(int(a),int(b)+1):
     # print xy
     if int(xy) % 4 == 0:
+        listLeap.append(xy)
+    elif int(xy) % 100 == 0 and int(xy) % 400 != 0:
 
-        if int(xy) % 100 != 0:
+        listLeap.append(xy)
 
-            listLeap.append(xy)
-        elif int(xy) % 400 == 0:
-            listLeap.append(xy)
 
 
 leapyrstring = ""
