@@ -1,7 +1,7 @@
 import sys
 from collections import Counter
 
-a=""
+a = ""
 try:
     a = str(sys.argv[1])
 
@@ -12,11 +12,10 @@ except:
 word = Counter(str(a).lower())
 count = 0
 wordlist = ""
-# print word
 
 for oiw in sorted(word, key=word.get, reverse=True):
-    count = count +1
-    wordlist = str(wordlist)+","+oiw+":"+str(word[oiw])
-    if count ==5:
+    count = count + 1
+    wordlist = str(wordlist) + "," + oiw + ":" + str(word[oiw])
+    if count == 5:
         break
 print wordlist[1:]
