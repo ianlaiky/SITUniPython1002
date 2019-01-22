@@ -2,14 +2,19 @@ import sys
 
 leapYr = 2001
 
-a = float(sys.argv[1])
-b = float(sys.argv[2])
+try:
+    a = float(sys.argv[1])
+    b = float(sys.argv[2])
+
+except ValueError:
+
+    print "Your input is invalid!"
 
 
 
 listLeap = []
 for xy in range(int(a),int(b)+1):
-    print xy
+    # print xy
     if int(xy) % 4 == 0:
 
         if int(xy) % 100 != 0:
