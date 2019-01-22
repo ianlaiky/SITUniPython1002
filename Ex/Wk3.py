@@ -23,6 +23,7 @@
 
 #ex 3
 
+
 word = "for loop is so cool!"
 
 for i in word:
