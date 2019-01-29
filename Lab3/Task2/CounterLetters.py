@@ -14,17 +14,40 @@ def letter_count(x):
     return dict(Counter(x))
 
 
-print letter_count("Thisit")
+# print letter_count("Thisit")
 
 
 def double_count(x, y):
     dixtx = dict(Counter(x)+Counter(y))
-    # print dixtx
+    return dixtx
+
+def various_count(*strr):
 
 
+
+    l = ""
+    for i in list(strr):
+        l=l+str(i)
+    return Counter(l)
 
 
 
 # print dict(letter_count("Thisisit"))
 
-double_count("This", "isit")
+# print various_count("This", "isit")
+
+a = ""
+try:
+    a = str(sys.argv[1])
+
+except:
+
+    print "Your input is invalid!"
+
+word = str(a).replace(",","")
+
+dic = dict(Counter(word))
+pr = ""
+for i in sorted(dict(dic),reverse=True):
+    pr=str(pr)+str(i)+":"+str(dic[i])+" "
+print pr
