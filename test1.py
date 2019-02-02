@@ -1,3 +1,5 @@
-a = input("Input Monthly Pay:")
+def say(message, times = 2):
+    print(message * times)
 
-print("Weekly Pay: "+ str(a/4))
+say('Hello')
+say('World', 5)
