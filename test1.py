@@ -27,3 +27,11 @@
 # for fruit in fruits:
 #     print fruit
 
+
+def reverse(stri):
+    if stri =="":
+        return stri
+    else:
+        return reverse(stri[1:])+stri[0]
+
+print reverse("gniknissidlrowehtolleh")
