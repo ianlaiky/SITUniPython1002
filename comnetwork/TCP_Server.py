@@ -1,5 +1,6 @@
 import socket
 import sys
+
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # Bind the socket to the port
@@ -14,7 +15,7 @@ while True:
     connection, client_address = sock.accept()
     try:
         print('connection from', client_address)
-    # Receive the data in small chunks and retransmit it
+        # Receive the data in small chunks and retransmit it
         while True:
             data = connection.recv(16)
             print('received {!r}'.format(data))
@@ -25,5 +26,5 @@ while True:
                 print('no data from', client_address)
                 break
     finally:
-    # Clean up the connection
+        # Clean up the connection
         connection.close()

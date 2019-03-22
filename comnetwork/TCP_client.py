@@ -2,11 +2,11 @@ import socket
 
 import sys
 
-sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # server_address=('192.168.1.10', 10000)
 
-server_address=('localhost', 10000)
+server_address = ('localhost', 10000)
 print('connecting to {} port {}'.format(*server_address))
 
 sock.connect(server_address)
@@ -24,7 +24,7 @@ try:
     amount_expected = len(message)
 
     while amount_received < amount_expected:
-        data=sock.recv(16)
+        data = sock.recv(16)
         amount_received += len(data)
         print('received {!r}'.format(data))
 
