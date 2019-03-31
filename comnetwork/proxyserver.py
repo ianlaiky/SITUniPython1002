@@ -66,7 +66,7 @@ def proxy_server(webserver,port_pos,conn,addr,data):
         print value
         print message
         so.close()
-        conn.close()
+        # conn.close()
         sys.exit(1)
 
 
@@ -102,4 +102,29 @@ def start():
             connection.close()
 
 
-start()
+def start2():
+
+    try:
+        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        s.bind(('',8081))
+        s.listen(5)
+        print "Inistaliseng socket"
+
+    except Exception, e:
+        print "unable to initisalsie socket"
+
+        sys.exit(2)
+
+    while 1:
+        try:
+            conn, addr = s.accept()
+            data = conn.recv(4096)
+            start_new_thread(connectionStr,(conn,data,addr))
+
+        except KeyboardInterrupt:
+            s.close()
+            sys.exit(1)
+    s.close()
+
+
+start2()
