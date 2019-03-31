@@ -19,6 +19,7 @@ def connectionStr(con,data,addr):
         webserver_pos = temp.find("/")
         if webserver_pos == -1:
             webserver_pos = len(temp)
+
         webserver = ""
         port = -1
         if (port_pos==-1 or webserver_pos < port_pos):
@@ -28,6 +29,7 @@ def connectionStr(con,data,addr):
 
             port = int((temp[(port_pos+1)])[:webserver_pos-port_pos-1])
             webserver = temp[:port_pos]
+
         proxy_server(webserver,port,con,addr,data)
 
 
@@ -40,8 +42,10 @@ def proxy_server(webserver,port_pos,conn,addr,data):
         so.connect((webserver, port_pos))
         so.send(data)
         while 1:
-            reply = so.recv(2500000)
 
+
+            reply = so.recv(4096)
+            # print reply
             if(len(reply)>0):
                 conn.send(reply)
 
@@ -53,11 +57,11 @@ def proxy_server(webserver,port_pos,conn,addr,data):
                 print "[*] Requet done : %s => %s <=" % (str(addr[0]),str(dar))
 
             else:
-
                 break
+
         so.close()
-        print "done..."
         conn.close()
+        print "done..."
     except socket.error, (value, message):
         print value
         print message
@@ -66,34 +70,36 @@ def proxy_server(webserver,port_pos,conn,addr,data):
         sys.exit(1)
 
 
+def start():
+    # Create a TCP/IP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # Bind the socket to the port
+    server_address = ('127.0.0.1', 8081)
+    print('starting up on {} port {}'.format(*server_address))
+    sock.bind(server_address)
+    # Listen for incoming connections
+    sock.listen(5)
+    while True:
+        # Wait for a connection
+        print('waiting for a connection')
+        connection, client_address = sock.accept()
+        try:
+            print('connection from', client_address)
+            # Receive the data in small chunks and retransmit it
+            while True:
+                data = connection.recv(4096)
 
-# Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# Bind the socket to the port
-server_address = ('127.0.0.1', 8081)
-print('starting up on {} port {}'.format(*server_address))
-sock.bind(server_address)
-# Listen for incoming connections
-sock.listen(320)
-while True:
-    # Wait for a connection
-    print('waiting for a connection')
-    connection, client_address = sock.accept()
-    try:
-        print('connection from', client_address)
-        # Receive the data in small chunks and retransmit it
-        while True:
-            data = connection.recv(2500000)
+                start_new_thread(connectionStr,(connection,data,client_address))
+                # print('received {!r}'.format(data))
+                # if data:
+                #     print('sending data back to the client')
+                #     connection.sendall(data)
+                # else:
+                #     print('no data from', client_address)
+                #     break
+        finally:
+            # Clean up the connection
+            connection.close()
 
-            start_new_thread(connectionStr,(connection,data,client_address))
-            # print('received {!r}'.format(data))
-            # if data:
-            #     print('sending data back to the client')
-            #     connection.sendall(data)
-            # else:
-            #     print('no data from', client_address)
-            #     break
-    finally:
-        # Clean up the connection
-        connection.close()
 
+start()
