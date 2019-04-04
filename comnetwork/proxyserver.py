@@ -2,17 +2,18 @@ import socket
 import sys
 from thread import *
 
-def connectionStr(con,data,addr):
+
+def connectionStr(con, data, addr):
     try:
         first_line = data.split('\n')[0]
         url = first_line.split(' ')[1]
 
         http_pos = url.find("://")
 
-        if(http_pos==-1):
+        if (http_pos == -1):
             temp = url
         else:
-            temp = url[(http_pos+3):]
+            temp = url[(http_pos + 3):]
 
         port_pos = temp.find(":")
 
@@ -22,39 +23,42 @@ def connectionStr(con,data,addr):
 
         webserver = ""
         port = -1
-        if (port_pos==-1 or webserver_pos < port_pos):
+        if (port_pos == -1 or webserver_pos < port_pos):
             port = 80
             webserver = temp[:webserver_pos]
         else:
 
-            port = int((temp[(port_pos+1)])[:webserver_pos-port_pos-1])
+            port = int((temp[(port_pos + 1)])[:webserver_pos - port_pos - 1])
             webserver = temp[:port_pos]
 
-        proxy_server(webserver,port,con,addr,data)
+        proxy_server(webserver, port, con, addr, data)
 
 
     except Exception, e:
         pass
 
-def proxy_server(webserver,port_pos,conn,addr,data):
+
+def proxy_server(webserver, port_pos, conn, addr, data):
     try:
-        so = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        print webserver
+        print webserver
+        so = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         so.connect((webserver, port_pos))
         so.send(data)
-        while 1:
 
+        while 1:
 
             reply = so.recv(4096)
             # print reply
-            if(len(reply)>0):
-                conn.send(reply)
+            if (len(reply) > 0):
+                conn.sendall(reply)
 
                 dar = float(len(reply))
-                dar = float(dar/1024)
+                dar = float(dar / 1024)
                 dar = "%.3s" % (str(dar))
                 dar = "%s KB" % (dar)
-                'Print A Cussdfdsfd'
-                print "[*] Requet done : %s => %s <=" % (str(addr[0]),str(dar))
+
+                print "[*] Requet done : " + str(addr[0]) + " => " + str(dar) + " <="
 
             else:
                 break
@@ -89,7 +93,7 @@ def start():
             while True:
                 data = connection.recv(4096)
 
-                start_new_thread(connectionStr,(connection,data,client_address))
+                start_new_thread(connectionStr, (connection, data, client_address))
                 # print('received {!r}'.format(data))
                 # if data:
                 #     print('sending data back to the client')
@@ -103,10 +107,9 @@ def start():
 
 
 def start2():
-
     try:
-        s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        s.bind(('',8081))
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(('', 8081))
         s.listen(5)
         print "Inistaliseng socket"
 
@@ -119,7 +122,7 @@ def start2():
         try:
             conn, addr = s.accept()
             data = conn.recv(4096)
-            start_new_thread(connectionStr,(conn,data,addr))
+            start_new_thread(connectionStr, (conn, data, addr))
 
         except KeyboardInterrupt:
             s.close()
